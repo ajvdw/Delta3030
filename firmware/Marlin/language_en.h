@@ -1,10 +1,10 @@
 /**
- * English
- *
- * LCD Menu Messages
- * Please note these are limited to 17 characters!
- *
- */
+   English
+
+   LCD Menu Messages
+   Please note these are limited to 17 characters!
+
+*/
 #ifndef LANGUAGE_EN_H
 #define LANGUAGE_EN_H
 
@@ -129,15 +129,14 @@
 #define MSG_BABYSTEP_Y                      "Babystep Y"
 #define MSG_BABYSTEP_Z                      "Babystep Z"
 #define MSG_ENDSTOP_ABORT                   "Endstop abort"
-
 #define MSG_RECTRACT                        "Rectract"
-
-#ifdef DELTA_CALIBRATION_MENU
-    #define MSG_DELTA_CALIBRATE             "Delta Calibration"
-    #define MSG_DELTA_CALIBRATE_X           "Calibrate X"
-    #define MSG_DELTA_CALIBRATE_Y           "Calibrate Y"
-    #define MSG_DELTA_CALIBRATE_Z           "Calibrate Z"
-    #define MSG_DELTA_CALIBRATE_CENTER      "Calibrate Center"
-#endif // DELTA_CALIBRATION_MENU
+#define MSG_FILAMENT_RELOAD                 "Filament Reload"
+#define MSG_FILAMENT_LOAD                   "Filament Load"
+#define MSG_FILAMENT_UNLOAD                 "Filament Unload"
+#define MSG_DELTA_CALIBRATE                 "Delta Calibration"
+#define MSG_DELTA_CALIBRATE_X               "Calibrate X"
+#define MSG_DELTA_CALIBRATE_Y               "Calibrate Y"
+#define MSG_DELTA_CALIBRATE_Z               "Calibrate Z"
+#define MSG_DELTA_CALIBRATE_CENTER          "Calibrate Center"
 
 #endif // LANGUAGE_EN_H

@@ -98,6 +98,20 @@ static void menu_action_setting_edit_callback_float51(const char* pstr, float* p
 static void menu_action_setting_edit_callback_float52(const char* pstr, float* ptr, float minValue, float maxValue, menuFunc_t callbackFunc);
 static void menu_action_setting_edit_callback_long5(const char* pstr, unsigned long* ptr, unsigned long minValue, unsigned long maxValue, menuFunc_t callbackFunc);
 
+
+#ifdef DELTA_CALIBRATION_MENU
+  static void calibrate_x_tower();
+  static void calibrate_y_tower();
+  static void calibrate_z_tower();
+  #ifdef DELTA_PLANE_LEVELING
+    static void calibrate_x_tower_opposite();
+    static void calibrate_y_tower_opposite();
+    static void calibrate_z_tower_opposite();
+  #endif
+  static void calibrate_center();
+  static void lcd_delta_calibrate_menu();
+#endif
+
 #define ENCODER_FEEDRATE_DEADZONE 10
 
 #if !defined(LCD_I2C_VIKI)
@@ -341,9 +355,9 @@ static void lcd_main_menu()
         MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
     }else{
         MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
-#ifdef DELTA_CALIBRATION_MENU
-        MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
-#endif // DELTA_CALIBRATION_MENU
+//#ifdef DELTA_CALIBRATION_MENU
+//        MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
+//#endif // DELTA_CALIBRATION_MENU
     }
     MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
 #ifdef SDSUPPORT
@@ -603,6 +617,38 @@ void lcd_cooldown()
     lcd_return_to_status();
 }
 
+static void lcd_man_filament_load()
+{
+  current_position[E_AXIS] += 750.0;
+#ifdef DELTA
+  calculate_delta(current_position);
+  plan_buffer_line(delta[X_AXIS], delta[Y_AXIS], delta[Z_AXIS], current_position[E_AXIS], manual_feedrate[E_AXIS], active_extruder);
+#else
+  plan_buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate[E_AXIS], active_extruder);
+#endif
+}
+
+static void lcd_man_filament_unload()
+{
+  current_position[E_AXIS] -= 750.0;
+#ifdef DELTA
+  calculate_delta(current_position);
+  plan_buffer_line(delta[X_AXIS], delta[Y_AXIS], delta[Z_AXIS], current_position[E_AXIS], manual_feedrate[E_AXIS], active_extruder);
+#else
+  plan_buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate[E_AXIS], active_extruder);
+#endif
+}
+
+static void lcd_filament_change()
+{
+  START_MENU();
+  MENU_ITEM(back, MSG_PREPARE, lcd_prepare_menu);
+  MENU_ITEM(function, MSG_FILAMENT_UNLOAD, lcd_man_filament_unload );
+  MENU_ITEM(function, MSG_FILAMENT_LOAD, lcd_man_filament_load );
+  END_MENU();
+}
+
+
 static void lcd_prepare_menu()
 {
     START_MENU();
@@ -614,7 +660,15 @@ static void lcd_prepare_menu()
 #endif
     MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84"));
     MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
-    MENU_ITEM(function, MSG_SET_HOME_OFFSETS, lcd_set_home_offsets);
+
+#ifdef DELTA_CALIBRATION_MENU
+    MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
+#endif  
+#ifdef DELTA
+    MENU_ITEM(submenu, MSG_FILAMENT_RELOAD, lcd_filament_change );
+#endif
+    
+    //MENU_ITEM(function, MSG_SET_HOME_OFFSETS, lcd_set_home_offsets);
     //MENU_ITEM(gcode, MSG_SET_ORIGIN, PSTR("G92 X0 Y0 Z0"));
 #if TEMP_SENSOR_0 != 0
   #if TEMP_SENSOR_1 != 0 || TEMP_SENSOR_2 != 0 || TEMP_SENSOR_BED != 0
@@ -639,16 +693,41 @@ static void lcd_prepare_menu()
 }
 
 #ifdef DELTA_CALIBRATION_MENU
-static void lcd_delta_calibrate_menu()
+void calibrate_pos( int x, int y )
 {
-    START_MENU();
-    MENU_ITEM(back, MSG_MAIN, lcd_main_menu);
-    MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
-    MENU_ITEM(gcode, MSG_DELTA_CALIBRATE_X, PSTR("G0 F8000 X-77.94 Y-45 Z0"));
-    MENU_ITEM(gcode, MSG_DELTA_CALIBRATE_Y, PSTR("G0 F8000 X77.94 Y-45 Z0"));
-    MENU_ITEM(gcode, MSG_DELTA_CALIBRATE_Z, PSTR("G0 F8000 X0 Y90 Z0"));
-    MENU_ITEM(gcode, MSG_DELTA_CALIBRATE_CENTER, PSTR("G0 F8000 X0 Y0 Z0"));
-    END_MENU();
+  char cmd[30];
+  sprintf( cmd, "G0 X%i Y%i", x, y );  
+  enquecommand("G0 F8000 Z5");     
+  enquecommand(cmd); 
+  enquecommand("G0 Z0");      
+}
+
+void calibrate_x_tower() { calibrate_pos( DELTA_CALIBRATION_P2_X, DELTA_CALIBRATION_P2_Y ); }
+void calibrate_y_tower() { calibrate_pos( DELTA_CALIBRATION_P4_X, DELTA_CALIBRATION_P4_Y ); }
+void calibrate_z_tower() { calibrate_pos( DELTA_CALIBRATION_P0_X, DELTA_CALIBRATION_P0_Y ); }  
+void calibrate_center()  { calibrate_pos( DELTA_CALIBRATION_PC_X, DELTA_CALIBRATION_PC_Y ); }
+
+#ifdef DELTA_PLANE_LEVELING
+void calibrate_x_tower_opposite(){ calibrate_pos( DELTA_CALIBRATION_P5_X, DELTA_CALIBRATION_P5_Y ); }
+void calibrate_y_tower_opposite(){ calibrate_pos( DELTA_CALIBRATION_P1_X, DELTA_CALIBRATION_P1_Y ); }
+void calibrate_z_tower_opposite(){ calibrate_pos( DELTA_CALIBRATION_P3_X, DELTA_CALIBRATION_P3_Y ); }  
+#endif // DELTA_PLANE_LEVELING
+
+static void lcd_delta_calibrate_menu() 
+{
+  START_MENU();
+  MENU_ITEM(back, MSG_PREPARE, lcd_prepare_menu);
+  MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
+  MENU_ITEM(function, MSG_DELTA_CALIBRATE_X "+", calibrate_x_tower);
+  MENU_ITEM(function, MSG_DELTA_CALIBRATE_Y "+", calibrate_y_tower);
+  MENU_ITEM(function, MSG_DELTA_CALIBRATE_Z "+", calibrate_z_tower);
+  #ifdef DELTA_PLANE_LEVELING    
+      MENU_ITEM(function, MSG_DELTA_CALIBRATE_X "-", calibrate_x_tower_opposite);
+      MENU_ITEM(function, MSG_DELTA_CALIBRATE_Y "-", calibrate_y_tower_opposite);
+      MENU_ITEM(function, MSG_DELTA_CALIBRATE_Z "-", calibrate_z_tower_opposite);
+  #endif
+  MENU_ITEM(function, MSG_DELTA_CALIBRATE_CENTER, calibrate_center);   
+  END_MENU();
 }
 #endif // DELTA_CALIBRATION_MENU
 

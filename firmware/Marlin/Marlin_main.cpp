@@ -35,7 +35,9 @@
     #include "qr_solve.h"
   #endif
 #endif // ENABLE_AUTO_BED_LEVELING
-
+#ifdef DELTA_PLANE_LEVELING
+  #include "delta_plane_leveling.h"
+#endif
 #include "ultralcd.h"
 #include "planner.h"
 #include "stepper.h"
@@ -4020,6 +4022,15 @@ void calculate_delta(float cartesian[3])
                        - sq(delta_tower3_x-cartesian[X_AXIS])
                        - sq(delta_tower3_y-cartesian[Y_AXIS])
                        ) + cartesian[Z_AXIS];
+
+#ifdef DELTA_PLANE_LEVELING
+  // Adjust print surface height by interpolation over the defined planes.
+  float offset = dpl.get_z(cartesian[X_AXIS], cartesian[Y_AXIS]); 
+  delta[X_AXIS] += offset;
+  delta[Y_AXIS] += offset;
+  delta[Z_AXIS] += offset;
+#endif // DELTA_PLANE_LEVELING
+                   
   /*
   SERIAL_ECHOPGM("cartesian x="); SERIAL_ECHO(cartesian[X_AXIS]);
   SERIAL_ECHOPGM(" y="); SERIAL_ECHO(cartesian[Y_AXIS]);
@@ -4028,6 +4039,9 @@ void calculate_delta(float cartesian[3])
   SERIAL_ECHOPGM("delta x="); SERIAL_ECHO(delta[X_AXIS]);
   SERIAL_ECHOPGM(" y="); SERIAL_ECHO(delta[Y_AXIS]);
   SERIAL_ECHOPGM(" z="); SERIAL_ECHOLN(delta[Z_AXIS]);
+#ifdef DELTA_PLANE_LEVELING
+  SERIAL_ECHOPGM(" offset="); SERIAL_ECHOLN(offset);
+#endif
   */
 }
 #endif
