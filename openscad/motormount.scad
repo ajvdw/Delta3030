@@ -1,12 +1,13 @@
 // Nema 16 Motor Mount
 thickness=4;
 width = 38;
+extra = 2; // 30mm=>0 34mm=>2
 
 $fn=36;
 
 intersection()
 {
-	cylinder(d=52,h=50);
+	cylinder(d=52+extra,h=50);
 difference()
 {
 	// Solids
@@ -21,14 +22,14 @@ difference()
 		for( a=[0:180:359] ) rotate([0,0,a]) 
 		{
 
-			translate( [width/2+2.5,-12.1,0] )	
+			translate( [width/2+2.5+extra,-12.1,0] )	
 			rotate([0,-120,0]) 
 			{
 				cube([18,24.2,thickness]);
 	
 			}
 
-			translate( [width/2+5.5,-3.25,0] )	
+			translate( [width/2+5.5+extra,-3.25,0] )	
 			rotate([0,-120,0]) 
 			{
 				cube([19.5,6.5,6]);
