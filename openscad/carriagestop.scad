@@ -4,7 +4,7 @@ difference()
 	union()
 	{
 		cylinder(d=10,h=6);
-		cylinder(d=6,h=12);
+		cylinder(d=6,h=10);
 	}
 	cylinder(d=3.5,h=12);
 }

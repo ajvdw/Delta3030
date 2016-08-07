@@ -50,7 +50,7 @@ difference()
 	for( a=[0:180:359] ) rotate([0,0,a]) 
 	{
 
-		translate( [width/2,-15] )	
+		translate( [width/2+extra,-15] )	
 		rotate([0,-120,0]) 
 		{
 			translate( [9,15,-8] )
