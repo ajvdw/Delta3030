@@ -6,15 +6,23 @@ module lcd2004()
 	difference()
 	{
 		// Solids
-		hull()
-		{
-			cube( [153, 70, 16] );
-			translate([153,70,0]) cylinder(r=1.5,h=15,$fn=8);
-			translate([153,0,0]) cylinder(r=1.5,h=15,$fn=8);
-			translate([0,0,0]) cylinder(r=1.5,h=15,$fn=8);
-			translate([0,70,0]) cylinder(r=1.5,h=15,$fn=8);
-		}
-		
+		union()
+        {
+            // Case
+            hull()
+            {
+                cube( [153, 70, 16] );
+                translate([153,70,0]) cylinder(r=2,h=14,$fn=8);
+                translate([153,0,0]) cylinder(r=2,h=14,$fn=8);
+                translate([0,0,0]) cylinder(r=2,h=14,$fn=8);
+                translate([0,70,0]) cylinder(r=2,h=14,$fn=8);
+            }
+            // Rim around SD Slot
+            hull() 
+            {
+                translate([-3,20.9,0]) cube([2.5,27.2,8]); 
+                translate([-1,12.9,0]) cube([1,43.2,14]);           }          
+        }
 		// Holes
 
 		// LCD display
@@ -24,7 +32,7 @@ module lcd2004()
 		// Master pcb 
 		translate([0.9,1.9,0]) cube([151.2,66.5,8]);
 		// SD Slot
-		translate([-1.5,20.9,0]) cube([2.5,27.2,8]);
+		translate([-5,20.9,0]) cube([10,27.2,8]);
 	
 		// Mounting screw holes
 		translate([149.3,65,0]) cylinder(r=1.75,h=17);
@@ -43,6 +51,7 @@ module lcd2004()
 		translate([117,3,0]) cube([30,63,14]);
 		translate([119,20,0]) cube([33,41,14]);
 		translate([1,20,0]) cube([11,41,14]);
+        translate([-4,-5,-1]) cube([160,80,2]);
 	}
 }
 
