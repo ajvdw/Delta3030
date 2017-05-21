@@ -4,6 +4,7 @@
 // visit: http://www.schlotzz.com
 //
 // Slightly modified by AJ
+$fn=48;
 
 module ramps_fan_mount_cutoff_cube(width, height, depth, cutoff = 5, radius = 5)
 {

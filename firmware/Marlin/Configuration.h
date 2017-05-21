@@ -70,10 +70,10 @@
 // NOTE NB all values for DELTA_* values MUST be floating point, so always have a decimal point in them
 
 // Center-to-center distance of the holes in the diagonal push rods.
-#define DELTA_DIAGONAL_ROD 220.0 // mm
+#define DELTA_DIAGONAL_ROD 225.0 // mm
 
 // Horizontal offset from middle of printer to smooth rod center.
-#define DELTA_SMOOTH_ROD_OFFSET 152.9 // mm
+#define DELTA_SMOOTH_ROD_OFFSET 155.9 // mm
 
 // Horizontal offset of the universal joints on the end effector.
 #define DELTA_EFFECTOR_OFFSET 23.0 // mm
@@ -234,7 +234,7 @@
 //can be software-disabled for whatever purposes by
 #define PREVENT_DANGEROUS_EXTRUDE
 //if PREVENT_DANGEROUS_EXTRUDE is on, you can still disable (uncomment) very long bits of extrusion separately.
-//#define PREVENT_LENGTHY_EXTRUDE
+#define PREVENT_LENGTHY_EXTRUDE
 
 #define EXTRUDE_MINTEMP 170
 #define EXTRUDE_MAXLENGTH (X_MAX_LENGTH+Y_MAX_LENGTH) //prevent extrusion of very large distances.
@@ -335,7 +335,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define INVERT_Y_DIR false
 #define INVERT_Z_DIR false
 
-#define INVERT_E0_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
+#define INVERT_E0_DIR true   // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E1_DIR false    // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E2_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
 
@@ -363,9 +363,6 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 //============================= Bed Auto Leveling ===========================
 //Bed Auto Leveling is still not compatible with Delta Kinematics
 
-
-
-
 // The position of the homing switches
 //#define MANUAL_HOME_POSITIONS  // If defined, MANUAL_*_HOME_POS below will be used
 //#define BED_CENTER_AT_0_0  // If defined, the center of the bed is at (X=0, Y=0)
@@ -376,7 +373,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 // For deltabots this means top and center of the Cartesian print volume.
 #define MANUAL_X_HOME_POS 0
 #define MANUAL_Y_HOME_POS 0
-#define MANUAL_Z_HOME_POS 231.4 // For delta: Distance between nozzle and print surface after homing.
+#define MANUAL_Z_HOME_POS 236.5 // For delta: Distance between nozzle and print surface after homing.
 
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
@@ -386,7 +383,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // default settings
 // delta speeds must be the same on xyz
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {80, 80, 80, 320}  // default steps per unit for Kossel (GT2, 20 tooth)
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {80, 80, 80, 99}  // default steps per unit for Kossel (GT2, 20 tooth)
 #define DEFAULT_MAX_FEEDRATE          {200, 200, 200, 25}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {2000,2000,2000,10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 
@@ -710,40 +707,40 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
   #ifdef DELTA_PLANE_LEVELING
     #define DELTA_CALIBRATION_Z_SPACING  0.05 // desired spacing
 
-    // CENTER
+    // CENTER   Lower Z to loosen, Raise Z to tighten
     #define DELTA_CALIBRATION_PC_X  0
     #define DELTA_CALIBRATION_PC_Y  0
-    #define DELTA_CALIBRATION_PC_Z  0     // measured Z spacing
+    #define DELTA_CALIBRATION_PC_Z  -0.35     // measured Z spacing
 
     // X POLE near (210 deg)
     #define DELTA_CALIBRATION_P2_X -78
     #define DELTA_CALIBRATION_P2_Y -45
-    #define DELTA_CALIBRATION_P2_Z   0    // measured Z spacing  
+    #define DELTA_CALIBRATION_P2_Z  -0.1   // measured Z spacing  
     
     // Y POLE near (330 deg)
     #define DELTA_CALIBRATION_P4_X  78
     #define DELTA_CALIBRATION_P4_Y -45
-    #define DELTA_CALIBRATION_P4_Z  0.1   // measured Z spacing      
+    #define DELTA_CALIBRATION_P4_Z  -0.025    // measured Z spacing      
     
     // Z POLE near  (90 deg)
     #define DELTA_CALIBRATION_P0_X  0
     #define DELTA_CALIBRATION_P0_Y  90
-    #define DELTA_CALIBRATION_P0_Z  0.35   // measured Z spacing  
+    #define DELTA_CALIBRATION_P0_Z  0.1   // measured Z spacing  0.35 l
     
     // X POLE opposite (30 deg)
     #define DELTA_CALIBRATION_P5_X  78
     #define DELTA_CALIBRATION_P5_Y  45
-    #define DELTA_CALIBRATION_P5_Z  0.2    // measured Z spacing  
+    #define DELTA_CALIBRATION_P5_Z  0.05   // measured Z spacing  
     
     // Y POLE opposite (150 deg)
     #define DELTA_CALIBRATION_P1_X -78
     #define DELTA_CALIBRATION_P1_Y  45
-    #define DELTA_CALIBRATION_P1_Z  0.65   // measured Z spacing 
+    #define DELTA_CALIBRATION_P1_Z  -0.05    // measured Z spacing 
 
     // Z POLE opposite (270 deg)
     #define DELTA_CALIBRATION_P3_X  0
     #define DELTA_CALIBRATION_P3_Y  -90
-    #define DELTA_CALIBRATION_P3_Z  -0.3   // measured Z spacing  
+    #define DELTA_CALIBRATION_P3_Z  -0.1   // measured Z spacing  
   #endif
  
 #endif

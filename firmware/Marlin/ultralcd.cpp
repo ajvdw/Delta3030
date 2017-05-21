@@ -619,7 +619,7 @@ void lcd_cooldown()
 
 static void lcd_man_filament_load()
 {
-  current_position[E_AXIS] += 750.0;
+  current_position[E_AXIS] += 250.0;
 #ifdef DELTA
   calculate_delta(current_position);
   plan_buffer_line(delta[X_AXIS], delta[Y_AXIS], delta[Z_AXIS], current_position[E_AXIS], manual_feedrate[E_AXIS], active_extruder);
@@ -630,7 +630,7 @@ static void lcd_man_filament_load()
 
 static void lcd_man_filament_unload()
 {
-  current_position[E_AXIS] -= 750.0;
+  current_position[E_AXIS] -= 250.0;
 #ifdef DELTA
   calculate_delta(current_position);
   plan_buffer_line(delta[X_AXIS], delta[Y_AXIS], delta[Z_AXIS], current_position[E_AXIS], manual_feedrate[E_AXIS], active_extruder);
@@ -665,7 +665,7 @@ static void lcd_prepare_menu()
     MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
 #endif  
 #ifdef DELTA
-    MENU_ITEM(submenu, MSG_FILAMENT_RELOAD, lcd_filament_change );
+//    MENU_ITEM(submenu, MSG_FILAMENT_RELOAD, lcd_filament_change );
 #endif
     
     //MENU_ITEM(function, MSG_SET_HOME_OFFSETS, lcd_set_home_offsets);

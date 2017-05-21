@@ -34,9 +34,9 @@ module effector()
 				translate([0,16.5,-3.5]) cylinder(r=m3_radius,h=height+1,$fn=12); 
 			
 			// Extruder
-			translate([0,0,-3.5])cylinder(r=hotend_radius,h=16.1, $fn=36);
+			translate([0,0,-3.5])cylinder(r=hotend_radius,h=16.0, $fn=36);
 			translate([0,0,-3.5])cylinder(r=hotend_radius-1.5, h=23.5,$fn=36);
-			translate( [0,0,12.6] ) cylinder(r1=hotend_radius,r2=hotend_radius-1.5,h=0.4, $fn=36);
+			translate( [0,0,12.5] ) cylinder(r1=hotend_radius,r2=hotend_radius-1.5,h=0.5, $fn=36);
 
 			// Horizontal extruder j-mount
 			translate([7.4,15,8.1]) rotate([90,0,0]) cylinder(r=1.6,h=30,$fn=12);
@@ -50,7 +50,7 @@ module effector()
 
 			// Cutouts		
 			for (a = [0:120:359]) rotate([0, 0, a])
-				translate([0, separation+4, 0] ) cylinder( r=offset+5, h=height, center=true );
+				translate([0, separation+4, 0] ) cylinder( r=offset+5, h=height+1, center=true );
 				 
 		}
 	}

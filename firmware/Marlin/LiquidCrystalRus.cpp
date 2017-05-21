@@ -351,11 +351,11 @@ uint8_t LiquidCrystalRus::recv(uint8_t mode) {
 }
 void LiquidCrystalRus::pulseEnable() {
   digitalWrite(_enable_pin, LOW);
-  delayMicroseconds(1);    
+  delayMicroseconds(10);    
   digitalWrite(_enable_pin, HIGH);
-  delayMicroseconds(1);    // enable pulse must be >450ns
+  delayMicroseconds(10);    // enable pulse must be >450ns
   digitalWrite(_enable_pin, LOW);
-  delayMicroseconds(100);   // commands need > 37us to settle
+  delayMicroseconds(80);   // commands need > 37us to settle
 }
 
 void LiquidCrystalRus::writeNbits(uint8_t value, uint8_t n) {
@@ -374,9 +374,9 @@ uint8_t LiquidCrystalRus::readNbits(uint8_t n) {
   }
 
   digitalWrite(_enable_pin, LOW);
-  delayMicroseconds(1);    
+  delayMicroseconds(10);    
   digitalWrite(_enable_pin, HIGH);
-  delayMicroseconds(1);    // enable pulse must be >450ns
+  delayMicroseconds(10);    // enable pulse must be >450ns
   
   for (int i = 0; i < n; i++) {
     retval |= (digitalRead(_data_pins[i]) == HIGH)?(1 << i):0;

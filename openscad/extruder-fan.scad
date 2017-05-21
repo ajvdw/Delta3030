@@ -1,4 +1,4 @@
-$fn=12;
+$fn=36;
 difference()
 {
 	// Solids
@@ -29,9 +29,9 @@ difference()
 	rotate([90,0,0]) translate([-0,14,-16]) cylinder( r=12.5,h=32,$fn=60 );
 
 	// fan flow cutout
-	cylinder( r1=14,r2=12,h=17, $fn=60 );
+	translate([0,0,-1]) cylinder( r1=14,r2=12,h=17, $fn=60 );
 
 	// fan mount holes
 	for( x=[-12,12] ) for( y=[-12,12] ) 
-		translate([x,y,0]) cylinder(r1=1,r2=0.3,h=7, $fn=6);
+		translate([x,y,-1]) cylinder(r1=1,r2=0.3,h=7, $fn=6);
 }

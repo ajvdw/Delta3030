@@ -11,6 +11,8 @@ m10_diameter = 10.5;
 m8_diameter = 9;
 m8_nut_diameter = 16.4;
 
+m6_diameter = 6.5;
+
 m4_diameter = 4.5;
 m4_nut_diameter = 9;
 
@@ -117,10 +119,10 @@ base_thickness=7;
 base_length=45; //70
 base_leadout=5; //25;
 
-basemount_shift=17;
-basemount_width=20;
-basemount_length=22;
-basemount_height=13;
+basemount_shift=15;
+basemount_width=15;
+basemount_length=17;
+basemount_height=10;
 
 nema17_hole_spacing=1.2*25.4; 
 nema17_width=1.7*25.4;
@@ -140,7 +142,7 @@ hole_for_608=22.6;
 block_top_right=[wade_block_width,wade_block_height];
 
 layer_thickness=0.2; //0.4;
-filament_feed_hole_d=4;
+filament_feed_hole_d=2;
 filament_diameter=3;
 filament_feed_hole_offset=filament_diameter+0.5;
 idler_nut_trap_depth=7.5;
@@ -253,28 +255,28 @@ module wade (legacy_mount=true)
 			}
 
 			// The idler hinge support.
-			translate(idler_fulcrum)
-			{
-				rotate(-15)
-				translate([-(idler_hinge_r+3),-idler_hinge_r-2,-wade_block_depth/2])
-				difference()
-				{
-				cube([idler_hinge_r+3,
-					idler_hinge_r*2+4,
-					wade_block_depth/2-
-					idler_short_side/2+
-					idler_hinge_width+0.25+
-					layer_thickness]);
-				translate([idler_hinge_r+2,(idler_hinge_r*2+4)/2,-layer_thickness])
-				cylinder(r=idler_hinge_r+1,h=10,$fn=50);
-				}
-				rotate(-15)
-				translate([-(idler_hinge_r+3),-idler_hinge_r-2,
-					-idler_short_side/2+idler_hinge_width+0.25])
-				cube([idler_hinge_r+3+15,
-					idler_hinge_r*2+4,
-					layer_thickness]);
-			}
+			//translate(idler_fulcrum)
+			//{
+			//	rotate(-15)
+			//	translate([-(idler_hinge_r+3),-idler_hinge_r-2,-wade_block_depth/2])
+			//	difference()
+			//	{
+			//	cube([idler_hinge_r+3,
+			//		idler_hinge_r*2+4,
+			//		wade_block_depth/2-
+			//		idler_short_side/2+
+			//		idler_hinge_width+0.25+
+			//		layer_thickness]);
+			//	translate([idler_hinge_r+2,(idler_hinge_r*2+4)/2,-layer_thickness])
+			//	cylinder(r=idler_hinge_r+1,h=10,$fn=50);
+			//	}
+			//	rotate(-15)
+			//	translate([-(idler_hinge_r+3),-idler_hinge_r-2,
+			//		-idler_short_side/2+idler_hinge_width+0.25])
+			//	cube([idler_hinge_r+3+15,
+			//		idler_hinge_r*2+4,
+			//		layer_thickness]);
+			//}
 
 			//The base.
 			translate([-base_leadout,0,0])
@@ -407,8 +409,8 @@ module block_holes(legacy_mount=false)
 			cylinder(r=filament_feed_hole_d/2,h=wade_block_depth*3,center=true,$fn=8);	
 
 			//Widened opening for hobbed bolt access.
-			translate([2,wade_block_height/2+2,wade_block_depth/2+0.2])
-			rotate([90,0,0])
+			translate([0,wade_block_height/2+2,wade_block_depth/2+0.2])
+			rotate([90,0,1.75])
 			rotate(-45)
 			union()
 			{
@@ -574,9 +576,9 @@ module wadeidler()
 		cylinder(h=idler_short_side+2,r=m3_diameter/2-0.1,center=true,$fn=8);
 
 		//Nut trap for fulcrum screw.
-		translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
-		rotate(360/16)
-		cylinder(h=3,r=m3_nut_diameter/2,$fn=6);
+		//translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
+		//rotate(360/16)
+		//cylinder(h=3,r=m3_nut_diameter/2,$fn=6);
 
 		for(idler_screw_hole=[-1,1])
 		translate(idler_axis+[2-idler_height,0,0])
@@ -672,6 +674,6 @@ module pneumatic_fittingmount_holes ()
 module basemount_holes()
 {
 	translate ([basemount_shift+basemount_length/2,-basemount_width/2,-1])
-	cylinder(d=m10_diameter,h=basemount_height+62);
+	cylinder(d=m6_diameter,h=basemount_height+62);
 }
 
