@@ -303,11 +303,11 @@ void myLiquidCrystal::send(uint8_t value, uint8_t mode) {
 void myLiquidCrystal::pulseEnable() {
   // due to inaccurate timing skipping pulses, scrambled screen (http://arduino.cc/en/Reference/delayMicroseconds)
   digitalWrite(_enable_pin, LOW);
-  delayMicroseconds(10);    //used to be 1, 
+  delayMicroseconds(5);    //used to be 1, 
   digitalWrite(_enable_pin, HIGH);
-  delayMicroseconds(10);    //used to be 1, enable pulse must be >450ns
+  delayMicroseconds(5);    //used to be 1, enable pulse must be >450ns
   digitalWrite(_enable_pin, LOW);
-  delayMicroseconds(80);   // commands need > 37us to settle, used to 100
+  delayMicroseconds(90);   // commands need > 37us to settle, used to 100
 }
 
 void myLiquidCrystal::write4bits(uint8_t value) {
