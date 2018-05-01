@@ -16,8 +16,7 @@ module PiezoMount()
             {
                 translate([-16,0,0]) cylinder(h=5+height,d2=10, d1=12);
                 translate([16,0,0]) cylinder(h=5+height,d2=10, d1=12);
-                translate([0,4,0]) cylinder(h=5+height,d=12);
-                cylinder(h=5+height,d=6+piezo);
+                cylinder(h=5+height,d1=6+piezo, d2=piezo-6);
             }
             // holes
             translate([0,0,-0.1]) cylinder(h=1,d=piezo);
@@ -28,7 +27,7 @@ module PiezoMount()
             translate([0,4,-0.1]) cylinder(h=2,d=m3_washer);
             translate([0,-2,-1.8]) rotate([70,0,0]) cylinder(d=4,h=20);
         }
-        cube(center=true, [80,20,2*height]); // clipping
+        translate([-40,-10,-height]) cube( [80,24.5,2*height]); // clipping
     }
 }
 
