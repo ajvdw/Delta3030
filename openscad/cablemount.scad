@@ -1,6 +1,10 @@
 $fn=60;
 
-module cable_clamp_s()
+// 1: small
+// 2: medium
+// 3: large
+
+module cable_mount_1()
 {
     difference()
     {
@@ -18,7 +22,7 @@ module cable_clamp_s()
     }
 }
 
-module cable_clamp_l()
+module cable_mount_2()
 {
     difference()
     {
@@ -37,5 +41,21 @@ module cable_clamp_l()
 }
 
 
+module cable_mount_3()
+{
+    difference()
+    {
+        // solid
+        union()
+        {
+            translate([5,4.5,0]) cylinder(d=16,h=3.5);
+            translate([-2,1.5,3]) cube([10,6,2]);
+        }
+        // holes
+        translate([3.5,4.5,-1]) cylinder(d=3.2,h=10);
+        translate([7.5,1.25,-1]) cube([1.75,6.5,10]);
+    }
+}
+
 // proper printing position
-    cable_clamp_l();
+cable_mount_3();
