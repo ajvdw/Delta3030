@@ -75,7 +75,7 @@
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
 #define STRING_CONFIG_H_AUTHOR "(AJvdW, default config)" // Who made the changes.
-#define SHOW_BOOTSCREEN
+//#define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 "DELTA 3030" // will be shown during bootup in line 1
 #define STRING_SPLASH_LINE2 "Version 1.1.8" // will be shown during bootup in line 2
 
@@ -493,9 +493,11 @@
 
     // Enable and set these values based on results of 'G33 A'
      
-   #define H_FACTOR 1.03
+   #define H_FACTOR 1.10
    #define R_FACTOR 2.32 
-   #define A_FACTOR 0.81
+   #define A_FACTOR 0.80
+
+
  
   #endif
 
@@ -513,17 +515,17 @@
   #define DELTA_DIAGONAL_ROD 222.5 // mm
 
   // height from z=0 to home position
-  #define DELTA_HEIGHT 221.15 // get this value from auto calibrate (measured without mirror)
+  #define DELTA_HEIGHT 220.93 // get this value from auto calibrate (measured without mirror)
 
-  #define DELTA_ENDSTOP_ADJ { 0.0,-0.15,-0.50 } // get these from auto calibrate
+  #define DELTA_ENDSTOP_ADJ { 0.0,-0.25,-0.57 } // get these from auto calibrate
 
   // Horizontal distance bridged by diagonal push rods when effector is centered.
-  #define DELTA_RADIUS 93.27 //mm  Get this value from auto calibrate
+  #define DELTA_RADIUS 93.21 //mm  Get this value from auto calibrate
 
   // Trim adjustments for individual towers
   // tower angle corrections for X and Y tower / rotate XYZ so Z tower angle = 0
   // measured in degrees anticlockwise looking from above the printer
-  #define DELTA_TOWER_ANGLE_TRIM { 0.70,-0.19,-0.52 } // get these values from auto calibrate
+  #define DELTA_TOWER_ANGLE_TRIM { 0.70,-0.18,-0.52 } // get these values from auto calibrate
 
 
   // delta radius and diaginal rod adjustments measured in mm
